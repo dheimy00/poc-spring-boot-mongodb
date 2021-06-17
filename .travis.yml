@@ -1,8 +1,8 @@
 language: java
+dist: xenial
+sudo: required
 jdk:
   - oraclejdk8
-sudo: true
-dist: trusty
 addons:
   apt:
     packages:
