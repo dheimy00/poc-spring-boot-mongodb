@@ -6,5 +6,8 @@ jdk:
 before_install:
   - chmod +x mvnw
   
+services:
+  - docker
+  
   
   
