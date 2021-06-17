@@ -1,8 +1,4 @@
-language: java
-dist: xenial
 sudo: required
-jdk:
-  - oraclejdk11
 services:
   - docker
 env:
@@ -16,6 +12,12 @@ before_install:
 before_script:
   - chmod +x mvnw
   - docker-compose up -d --build
+
+script:
+  - docker-compose exec users python manage.py test
+  - docker-compose exec users black project
+  - docker-compose exec users flake8 project
   
-  
+after_script:
+  - docker-compose down
   
