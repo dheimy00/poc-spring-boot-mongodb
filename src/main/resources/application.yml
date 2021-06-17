@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  data:
+    mongodb:
+      authentication-database: admin
+      auto-index-creation: true
+      database: amigoscode
+      host: localhost
+      port: 27017
+      password: rootpass
+      username: rootuser
+      repositories:
+        type: auto
+  application:
+           name: student-service
+---
+server:
+  port: 8080
+
+spring:
+  profiles: dev
+  data:
+    mongodb:
+      authentication-database: admin
+      auto-index-creation: true
+      database: amigoscode
+      host: localhost
+      port: 27017
+      password: rootpass
+      username: rootuser
+      repositories:
+        type: auto
