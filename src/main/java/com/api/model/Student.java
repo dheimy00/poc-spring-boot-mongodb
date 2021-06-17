@@ -26,6 +26,4 @@ public class Student {
 	private BigDecimal totalSpentInBooks;
 	private LocalDateTime created;
 
-
-
 }
