@@ -6,6 +6,9 @@ dist: trusty
 addons:
   apt:
     packages:
-      - oracle-java11-installer
+      - oracle-java11-installer-local
 before_install:
   - chmod +x mvnw
+  
+  
+  
