@@ -29,3 +29,15 @@ jobs:
 
       - name: Rodar testes
         run: mvn clean test -DskipTests=false
+        
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="curl --silent --fail mongodb://localhost:27017"
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+        
