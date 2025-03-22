@@ -20,6 +20,10 @@ jobs:
           --health-interval=10s 
           --health-timeout=5s 
           --health-retries=5
+          --network host  # Usando a rede padrão host
+        env:
+          MONGO_INITDB_ROOT_USERNAME: rootuser
+          MONGO_INITDB_ROOT_PASSWORD: rootpass          
 
     steps:
       - name: Checkout do código
