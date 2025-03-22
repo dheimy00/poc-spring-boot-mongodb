@@ -12,7 +12,7 @@ jobs:
 
     services:
       mongodb:
-        image: mongo
+        image: mongo:5.0
         ports:
           - 27017:27017
         options: >-
@@ -34,6 +34,9 @@ jobs:
         with:
           distribution: 'adopt'  # ou 'adopt', 'zulu'
           java-version: '11'       # ou 11, 21, dependendo do seu projeto
+
+      - name: Esperar MongoDB inicializar
+        run: sleep 30  # Aguarda o MongoDB por 30 segundos          
         
       - name: Build com Maven
         run: mvn clean install
