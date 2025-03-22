@@ -9,8 +9,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-           
 
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="curl --silent --fail mongodb://localhost:27017"
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+        env:
+          MONGO_INITDB_ROOT_USERNAME: rootuser
+          MONGO_INITDB_ROOT_PASSWORD: rootpass
+         
+            
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3      
@@ -20,24 +34,10 @@ jobs:
         with:
           distribution: 'adopt'  # ou 'adopt', 'zulu'
           java-version: '11'       # ou 11, 21, dependendo do seu projeto
-
-      - name: Puxar imagem do MongoDB
-        run: docker pull mongo:latest  
         
       - name: Build com Maven
         run: mvn clean install
 
       - name: Rodar testes
         run: mvn clean test -DskipTests=false
-        
-    services:
-      mongodb:
-        image: mongo:latest
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd="curl --silent --fail mongodb://localhost:27017"
-          --health-interval=10s 
-          --health-timeout=5s 
-          --health-retries=5
         
