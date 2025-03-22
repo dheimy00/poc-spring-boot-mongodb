@@ -49,7 +49,7 @@ jobs:
   # Job para rodar os testes
   test:
     runs-on: ubuntu-latest
-    needs: build  # O job de testes depende do job de build
+    needs: setup_mongodb  # O job de testes depende do job de build
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
