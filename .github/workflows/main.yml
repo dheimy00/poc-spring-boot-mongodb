@@ -2,17 +2,17 @@ name: Java CI Pipeline
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
-  # Job para configurar o ambiente (MongoDB)
-  setup_mongodb:
+  build:
     runs-on: ubuntu-latest
+
     services:
       mongodb:
-        image: mongo:5.0
+        image: mongo:5.0  # Usando uma versão estável específica
         ports:
           - 27017:27017
         env:
@@ -29,44 +29,11 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-  # Job para build
-  build:
-    runs-on: ubuntu-latest
-    needs: setup_mongodb  # O job de build depende do job anterior
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
-
-      - name: Configurar o JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'adopt'
-          java-version: '11'
+      - name: Esperar MongoDB inicializar
+        run: sleep 30  # Aguarda o MongoDB por 30 segundos
 
       - name: Build com Maven
         run: mvn clean install
 
-  # Job para rodar os testes
-  test:
-    runs-on: ubuntu-latest
-    needs: setup_mongodb  # O job de testes depende do job de build
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
-
-      - name: Configurar o JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'adopt'
-          java-version: '11'
-
       - name: Rodar testes
         run: mvn clean test -DskipTests=false
-
-  # Job para limpar após a execução
-  cleanup:
-    runs-on: ubuntu-latest
-    needs: test  # O job de cleanup depende do job de teste
-    steps:
-      - name: Limpeza pós-execução
-        run: echo "Limpeza após os testes"
