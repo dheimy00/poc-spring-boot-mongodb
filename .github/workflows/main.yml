@@ -1,0 +1,27 @@
+name: Java CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar o JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'  # ou 'adopt', 'zulu'
+          java-version: '11'       # ou 11, 21, dependendo do seu projeto
+
+      - name: Build com Maven
+        run: mvn clean install
+
+      - name: Rodar testes
+        run: mvn test
