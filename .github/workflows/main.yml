@@ -15,11 +15,6 @@ jobs:
         image: mongo:5.0
         ports:
           - 27017:27017
-        options: >-
-          --health-cmd="nc -z localhost 27017"  # Usando nc para checar a porta
-          --health-interval=10s 
-          --health-timeout=5s 
-          --health-retries=5
         env:
           MONGO_INITDB_ROOT_USERNAME: rootuser
           MONGO_INITDB_ROOT_PASSWORD: rootpass
